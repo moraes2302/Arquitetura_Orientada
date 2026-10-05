@@ -9,7 +9,7 @@ Java 17 · Spring Boot 4.1.1 · Spring Web Services · JAXB (jaxb2-maven-plugin)
 ## Como executar
 ```bash
 mvn clean compile        # gera as classes a partir do produtos.xsd
-mvn spring-boot:run      # sobe o serviço na porta 8080
+mvn spring-boot:run      # sobe o serviço na porta 8085
 ```
 - WSDL: http://localhost:8080/ws/produtos.wsdl
 - Endpoint SOAP: http://localhost:8080/ws
