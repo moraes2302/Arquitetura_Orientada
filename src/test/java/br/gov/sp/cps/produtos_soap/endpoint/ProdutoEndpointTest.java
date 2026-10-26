@@ -1,6 +1,8 @@
 package br.gov.sp.cps.produtos_soap.endpoint;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import br.gov.sp.cps.produtos_soap.exception.ProdutoNaoEncontradoException;
 
 import org.junit.jupiter.api.Test;
 
@@ -29,9 +31,6 @@ class ProdutoEndpointTest {
 		ConsultarProdutoRequest request = new ConsultarProdutoRequest();
 		request.setCodigo(999);
 
-		ConsultarProdutoResponse response = endpoint.consultarProduto(request);
-
-		assertEquals("Produto não encontrado", response.getNome());
-		assertEquals(0, response.getQuantidadeEstoque());
+        assertThrows(ProdutoNaoEncontradoException.class, () -> endpoint.consultarProduto(request));
 	}
 }
