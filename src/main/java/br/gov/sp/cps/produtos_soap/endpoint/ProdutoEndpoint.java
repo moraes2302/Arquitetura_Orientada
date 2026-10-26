@@ -8,6 +8,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import br.gov.sp.cps.produtos_soap.model.ConsultarProdutoRequest;
 import br.gov.sp.cps.produtos_soap.model.ConsultarProdutoResponse;
 import br.gov.sp.cps.produtos_soap.repository.ProdutoRepository;
+import br.gov.sp.cps.produtos_soap.exception.ProdutoNaoEncontradoException;
 
 @Endpoint
 public class ProdutoEndpoint {
@@ -26,17 +27,12 @@ public class ProdutoEndpoint {
 
 		ConsultarProdutoResponse response = new ConsultarProdutoResponse();
 
-		repository.buscarPorCodigo(request.getCodigo()).ifPresentOrElse(produto -> {
-			response.setNome(produto.nome());
-			response.setDescricao(produto.descricao());
-			response.setMarca(produto.marca());
-			response.setQuantidadeEstoque(produto.quantidadeEstoque());
-		}, () -> {
-			response.setNome("Produto não encontrado");
-			response.setDescricao("-");
-			response.setMarca("-");
-			response.setQuantidadeEstoque(0);
-		});
+        var produto = repository.buscarPorCodigo(request.getCodigo())
+                .orElseThrow(() -> new ProdutoNaoEncontradoException(request.getCodigo()));
+        response.setNome(produto.nome());
+        response.setDescricao(produto.descricao());
+        response.setMarca(produto.marca());
+        response.setQuantidadeEstoque(produto.quantidadeEstoque());
 
 		return response;
 	}

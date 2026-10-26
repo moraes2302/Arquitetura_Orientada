@@ -15,6 +15,17 @@ import org.springframework.xml.xsd.XsdSchema;
 @Configuration
 public class WebServiceConfig {
 
+    @Bean
+    public org.springframework.ws.soap.server.endpoint.SoapFaultAnnotationExceptionResolver soapFaultResolver() {
+        var resolver = new org.springframework.ws.soap.server.endpoint.SoapFaultAnnotationExceptionResolver();
+        resolver.setOrder(0);
+        var fallback = new org.springframework.ws.soap.server.endpoint.SoapFaultDefinition();
+        fallback.setFaultCode(org.springframework.ws.soap.server.endpoint.SoapFaultDefinition.SERVER);
+        fallback.setFaultStringOrReason("Erro interno ao consultar produto");
+        resolver.setDefaultFault(fallback);
+        return resolver;
+    }
+
 	// Servlet que recebe as requisições SOAP em /ws/*
 	@Bean
 	public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(ApplicationContext context) {
