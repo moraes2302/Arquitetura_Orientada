@@ -45,4 +45,4 @@ Execute `mvn clean verify`. Os testes de integração iniciam o servidor em port
 
 ### Fluxo Git
 
-As alterações da parte 2 ficam na branch `seguranca`, em commits separados. Envie com `git push -u origin seguranca`. Após a validação, faça o merge na `main` e envie ao GitHub; não antecipe essa etapa antes da aprovação.
+As alterações da parte 2 ficam na branch `seguranca`, em commits separados.
