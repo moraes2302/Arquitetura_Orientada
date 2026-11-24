@@ -6,3 +6,12 @@ target/
 *.iml
 .vscode/
 HELP.md
+
+# Configurações locais e credenciais
+**/.m2/
+**/.env
+**/.env.local
+**/.env.*.local
+**/logs/
+**/temp/
+**/work/

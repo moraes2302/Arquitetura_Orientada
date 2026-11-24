@@ -1,3 +1,11 @@
+# Arquitetura Orientada — atividades SOAP
+
+**Nova etapa: [Sistema de Restaurante SOA](restaurante/README.md).**
+
+A pasta `restaurante/` contém o projeto multimódulo das aulas: MySQL, quatro serviços SOAP, administração/garçom em Swing e cardápio público com QR Code. Consulte o guia dessa pasta para compilar e executar. O exercício anterior está documentado abaixo e continua independente.
+
+---
+
 # produtos-soap
 
 Web Service SOAP (Spring Boot + Spring WS, abordagem *contract-first*) que recebe o **código de um produto**

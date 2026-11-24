@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- POM pai do projeto multimódulo -->
+    <parent>
+        <groupId>br.edu.soa</groupId>
+        <artifactId>restaurante-soap</artifactId>
+        <version>2.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <!-- Módulo web executado pelo Tomcat -->
+    <artifactId>servidor</artifactId>
+    <packaging>war</packaging>
+
+    <dependencies>
+
+        <!-- Contratos SOAP -->
+        <dependency>
+            <groupId>br.edu.soa</groupId>
+            <artifactId>contrato</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Implementação de persistência -->
+        <dependency>
+            <groupId>br.edu.soa</groupId>
+            <artifactId>infraestrutura</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Runtime SOAP Metro -->
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-rt</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- API Servlet disponibilizada pelo Tomcat -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Conversão de objetos Java para JSON -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <!-- Dependências de testes -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>br.edu.soa</groupId>
+            <artifactId>desktop</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <!-- Nome do WAR gerado: restaurante.war -->
+        <finalName>restaurante</finalName>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+
+                <configuration>
+                    <webResources>
+
+                        <!-- Cardápio HTML, CSS e JavaScript -->
+                        <resource>
+                            <directory>${project.basedir}/../../../cardapio-web</directory>
+                            <targetPath>cardapio</targetPath>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </resource>
+
+                        <!-- Arquivos WSDL -->
+                        <resource>
+                            <directory>${project.basedir}/../contrato/src/main/resources/wsdl</directory>
+                            <targetPath>WEB-INF/wsdl</targetPath>
+                        </resource>
+
+                    </webResources>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.5.3</version>
+                <executions><execution><goals><goal>integration-test</goal><goal>verify</goal></goals></execution></executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
